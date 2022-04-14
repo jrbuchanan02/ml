@@ -208,9 +208,6 @@ namespace ml
 
             Matrix<V> result{*this};
 
-            // multiple cases:
-            // case 1: all rows linerarly independent.
-
             for (std::size_t i = 0; i < std::min(rowCount(), colCount()); i++)
             {
                 for (std::size_t r = 0; r < rowCount(); r++)
@@ -285,8 +282,43 @@ namespace ml
                     }
                 } while (madeSwap);
             }
-            // move all rows of zeros to the bottom using something similar to
-            // bubble sort.
+            // for each row, make sure that the first nonzero element is 1.
+            // if not, make it 1 and zero out the other elements of that column
+            // via row operations.
+            for (std::size_t r = 0; r < rowCount(); r++)
+            {
+                for (std::size_t c = 0; c < colCount(); c++)
+                {
+                    if (result[r][c] != 0)
+                    {
+                        if (result[r][c] != 1)
+                        {
+                            // divide the entire row by this element
+                            V pivotElement = result[r][c];
+                            for (auto &elem : result[r])
+                            {
+                                elem /= pivotElement;
+                            }
+                            // zero out the other rows with respect to this
+                            // column
+                            for (std::size_t i = 0; i < rowCount(); i++)
+                            {
+                                if (i == r)
+                                {
+                                    continue;
+                                }
+                                V factor = result[i][c] / result[r][c];
+                                for ( std::size_t j = 0; j < colCount(); j++)
+                                {
+                                    result[i][j] -= factor * result[r][j];
+                                }
+                            }
+                        }
+                        break;
+                    }
+                }
+            }
+
             return result;
         }
 
@@ -324,19 +356,20 @@ namespace ml
             }
         }
 
-        template<class W = V>
+        template <class W = V>
         bool operator==(Matrix<W> const &that) const noexcept
         {
             if (rowCount() != that.rowCount() || colCount() != that.colCount())
             {
                 return false;
-            } else
+            }
+            else
             {
-                for ( std::size_t i = 0; i < rowCount(); i++)
+                for (std::size_t i = 0; i < rowCount(); i++)
                 {
-                    for ( std::size_t j = 0; j < colCount(); j++)
+                    for (std::size_t j = 0; j < colCount(); j++)
                     {
-                        if ( (*this)[i][j] != that[i][j])
+                        if ((*this)[i][j] != that[i][j])
                         {
                             return false;
                         }
@@ -346,4 +379,5 @@ namespace ml
             }
         }
     };
+
 }
