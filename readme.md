@@ -44,8 +44,27 @@ the library). This floating point precision issue exists in ***all***
 computer calculations unless they operate with arbitrary size numbers or
 use string manipulation to do their bidding. *As a result, this is not an issue*.
 
+## Wish List
+
+Here is a wish list of what to do with ML.
+
+- Have functions present in matrices, so, instead of just representing 2.5, you
+can represent 2.5 * sin, and then, a matrix operation will not just multiply the
+number by 2.5, but take the sine of the number **then** multiply by 2.5. Much
+more powerful and how machine learning is actually done.
+- Header files and other language binding tools to connect with as many programming
+languages as possible.
+- "Behind-the-scenes" GPU compute for matrices and anything else with computation.
+- More features that may or may not depend on different C++ standards
+- Possibility to link directly from C++ to C++ (this one's out of my control) and
+call a C++ function directly from the shared library.[^2]
 
 [^1]: Python remains an amazing programming language and definitely deserves
 its universal usage. The lack of portability happens to be a common theme
 with Python programs and is really only an issue when the software you're
 trying to run does not *automatically* resolve these portability issues.
+[^2]: This item is out of my control since C++ compilers "mangle" the name
+of the function to really whatever they want to name the function. As a result,
+the same compiler can become incompatible with itself if it is just targeting
+a different machine (gcc uses a different mangling scheme between targeting
+mingw and linux).
