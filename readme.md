@@ -1,7 +1,8 @@
 # ML
 
 ML, which stands for "Machine Learning" is my angered response to Python's lack
-of portability. It started something like this: I wanted to run these awesome
+of portability.[^1] Cynically, most of my good ideas come with my anger at a problem
+that shouldn't exist. It started something like this: I wanted to run these awesome
 StyleGANx (where x is a number) neural networks because I find the research
 into deep learning for image manipulation amazing (whenever it's done for a
 productive cause, like imagining a person say, with a beard or as another
@@ -42,3 +43,9 @@ fractions would fix this issue (and also significantly complicate and slow down
 the library). This floating point precision issue exists in ***all***
 computer calculations unless they operate with arbitrary size numbers or
 use string manipulation to do their bidding. *As a result, this is not an issue*.
+
+
+[^1]: Python remains an amazing programming language and definitely deserves
+its universal usage. The lack of portability happens to be a common theme
+with Python programs and is really only an issue when the software you're
+trying to run does not *automatically* resolve these portability issues.
