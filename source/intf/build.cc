@@ -13,6 +13,7 @@
 
 #undef __IMPORT__
 #include "code/math/matrix.hh"
+#include "meta.hh"
 #include "ml.hh"
 
 #include <memory>

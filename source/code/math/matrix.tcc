@@ -208,7 +208,7 @@ ml::Matrix<V> ml::Matrix<V>::echelon() const
         }
 
         // multiply the row in the diagonal by 1 / the item in the diagonal
-        double factor = result[i][i];
+        V factor = result[i][i];
         for (auto &x : result[i])
         {
             x /= factor;
@@ -227,7 +227,7 @@ ml::Matrix<V> ml::Matrix<V>::echelon() const
             }
             else
             {
-                double k = result[r][i];
+                V k = result[r][i];
                 for (std::size_t j = 0; j < colCount(); j++)
                 {
                     result[r][j] -= k * result[i][j];
