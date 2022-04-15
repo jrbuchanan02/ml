@@ -26,6 +26,8 @@ int main ( int const argc, char const *const *const argv )
     testMatrixAllocateAndFill ( );
     testMatrixVectorMultiplication ( );
     testMatrixMatrixMultiplication ( );
+    testEchelon ( );
+    testInverse ( );
 }
 
 void setIndex ( MatrixOfDoubles matrix, size_y r, size_y c, double val )
@@ -233,12 +235,206 @@ void testMatrixMatrixMultiplication ( )
     lhs = rhs = out = nullptr;
 }
 
-void testEchelon()
+void testEchelon ( )
 {
-    // TODO #2 Implement testEchelon
+    MatrixOfDoubles        test = nullptr;
+    unsigned long long int size = 0;
+    sizeofMatrixOfDoubles ( &size );
+    test = std::malloc ( size );
+    constructMatrixOfDoubles ( test, 2, 2 );
+    setIndexOfDoubles ( test, 0, 0, 1 );
+    setIndexOfDoubles ( test, 0, 1, 2 );
+    setIndexOfDoubles ( test, 1, 0, 3 );
+    setIndexOfDoubles ( test, 1, 1, 4 );
+
+    MatrixOfDoubles result = nullptr;
+    result                 = std::malloc ( size );
+
+    echelonOfDoubles ( result, test );
+
+    std::cout << "Expected: [1, 0; 0, 1]\n";
+    std::cout << "Actual  : [";
+    double temp = 0;
+    getIndexOfDoubles ( result, 0, 0, &temp );
+    std::cout << temp;
+    getIndexOfDoubles ( result, 0, 1, &temp );
+    std::cout << ", " << temp << "; ";
+    getIndexOfDoubles ( result, 1, 0, &temp );
+    std::cout << temp;
+    getIndexOfDoubles ( result, 1, 1, &temp );
+    std::cout << ", " << temp << "]\n";
+
+    deleteMatrixOfDoubles ( test );
+    deleteMatrixOfDoubles ( result );
+
+    test   = std::malloc ( size );
+    result = std::malloc ( size );
+    constructMatrixOfDoubles ( test, 3, 3 );
+
+    double matrix3x3 [] = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+    for ( std::size_t r = 0; r < 3; r++ )
+    {
+        for ( std::size_t c = 0; c < 3; c++ )
+        {
+            setIndexOfDoubles ( test, r, c, matrix3x3 [ 3 * r + c ] );
+        }
+    }
+
+    echelonOfDoubles ( result, test );
+
+    std::cout << "Expected: [1, 0, -1, 0, 1, 2; 0, 0, 0]\n";
+    std::cout << "Actual  : [";
+    for ( std::size_t r = 0; r < 3; r++ )
+    {
+        for ( std::size_t c = 0; c < 3; c++ )
+        {
+            double temp = 0.0;
+            getIndexOfDoubles ( result, r, c, &temp );
+            std::cout << temp;
+            if ( c == 2 )
+            {
+                if ( r == 2 )
+                {
+                    std::cout << "]\n";
+                } else
+                {
+                    std::cout << "; ";
+                }
+            } else
+            {
+                std::cout << ", ";
+            }
+        }
+    }
+
+    deleteMatrixOfDoubles ( test );
+    deleteMatrixOfDoubles ( result );
+
+    test   = std::malloc ( size );
+    result = std::malloc ( size );
+
+    constructMatrixOfDoubles ( test, 3, 4 );
+    double matrix3x4 [] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
+
+    for ( std::size_t r = 0; r < 3; r++ )
+    {
+        for ( std::size_t c = 0; c < 4; c++ )
+        {
+            setIndexOfDoubles ( test, r, c, matrix3x4 [ 4 * r + c ] );
+        }
+    }
+
+    echelonOfDoubles ( result, test );
+
+    std::cout << "Expected: [1, 0, -1, -2; 0, 1, 2, 3; 0, 0, 0, 0]\n";
+    std::cout << "Actual  : [";
+    for ( std::size_t r = 0; r < 3; r++ )
+    {
+        for ( std::size_t c = 0; c < 4; c++ )
+        {
+            double temp = 0;
+            getIndexOfDoubles ( result, r, c, &temp );
+            std::cout << temp;
+            if ( c == 3 )
+            {
+                if ( r == 2 )
+                {
+                    std::cout << "]\n";
+                } else
+                {
+                    std::cout << "; ";
+                }
+            } else
+            {
+                std::cout << ", ";
+            }
+        }
+    }
+
+    deleteMatrixOfDoubles ( test );
+    deleteMatrixOfDoubles ( result );
+    test   = nullptr;
+    result = nullptr;
 }
 
-void testInverse()
+void testInverse ( )
 {
-    // TODO #3 Implement testInverse
+    unsigned long long int size   = 0;
+    MatrixOfDoubles        test   = nullptr;
+    MatrixOfDoubles        result = nullptr;
+
+    sizeofMatrixOfDoubles ( &size );
+
+    test   = std::malloc ( size );
+    result = std::malloc ( size );
+
+    double matrix [] = { 1, 2, 3, 4, 5, 6, 7, 8, 8 };
+    double invers [] =
+            { -8.0 / 3, 8.0 / 3, -1.0, 10.0 / 3, -13.0 / 3, 2.0, -1, 2, -1 };
+
+    constructMatrixOfDoubles ( test, 3, 3 );
+
+    for ( std::size_t r = 0; r < 3; r++ )
+    {
+        for ( std::size_t c = 0; c < 3; c++ )
+        {
+            setIndexOfDoubles ( test, r, c, matrix [ 3 * r + c ] );
+        }
+    }
+
+    inverseOfDoubles ( result, test );
+
+    std::cout << "Expected: [";
+
+    for ( std::size_t r = 0; r < 3; r++ )
+    {
+        for ( std::size_t c = 0; c < 3; c++ )
+        {
+            std::cout << invers [ 3 * r + c ];
+            if ( c == 2 )
+            {
+                if ( r == 2 )
+                {
+                    std::cout << "]\n";
+                } else
+                {
+                    std::cout << "; ";
+                }
+            } else
+            {
+                std::cout << ", ";
+            }
+        }
+    }
+
+    std::cout << "Actual  : [";
+
+    for ( std::size_t r = 0; r < 3; r++ )
+    {
+        for ( std::size_t c = 0; c < 3; c++ )
+        {
+            double temp = 0;
+            getIndexOfDoubles ( result, r, c, &temp );
+            std::cout << temp;
+            if ( c == 2 )
+            {
+                if ( r == 2 )
+                {
+                    std::cout << "]\n";
+                } else
+                {
+                    std::cout << "; ";
+                }
+            } else
+            {
+                std::cout << ", ";
+            }
+        }
+    }
+
+    deleteMatrixOfDoubles ( test );
+    deleteMatrixOfDoubles ( result );
+
+    test   = nullptr;
+    result = nullptr;
 }
