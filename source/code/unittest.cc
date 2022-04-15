@@ -34,10 +34,10 @@ int main ( int const, char const *const *const )
 void inverseTest ( )
 {
     using namespace ml;
-    Matrix< double > test { 3, 3 };
-    test [ 0 ] = std::vector< double > { 1, 2, 3 };
-    test [ 1 ] = std::vector< double > { 4, 5, 6 };
-    test [ 2 ] = std::vector< double > { 7, 8, 8 };
+    Matrix< Double > test { 3, 3 };
+    test [ 0 ] = std::vector< Double > { 1, 2, 3 };
+    test [ 1 ] = std::vector< Double > { 4, 5, 6 };
+    test [ 2 ] = std::vector< Double > { 7, 8, 8 };
     std::cout << "Expected: [" << -8.0 / 3 << "," << 8.0 / 3 << "," << -1.0
               << ";";
     std::cout << 10.0 / 3 << "," << -13.0 / 3 << "," << 2.0 << ";";
@@ -53,8 +53,8 @@ void inverseTest ( )
               << result [ 2 ][ 2 ] << "]\n";
 
     std::cout << "Does this result pass?";
-    bool passes = ( result * test ) == Matrix< double >::identity ( 3 )
-               || ( test * result ) == Matrix< double >::identity ( 3 );
+    bool passes = ( result * test ) == Matrix< Double >::identity ( 3 )
+               || ( test * result ) == Matrix< Double >::identity ( 3 );
     std::cout << ( passes ? " Yes" : " No" ) << "\n";
 
     std::cout << "Product of test and its supposed inverse:\n";
@@ -78,9 +78,9 @@ void inverseTest ( )
 void echelonTest ( )
 {
     using namespace ml;
-    Matrix< double > test { 2, 2 };
-    test [ 0 ] = std::vector< double > { 1, 2 };
-    test [ 1 ] = std::vector< double > { 3, 4 };
+    Matrix< Double > test { 2, 2 };
+    test [ 0 ] = std::vector< Double > { 1, 2 };
+    test [ 1 ] = std::vector< Double > { 3, 4 };
 
     std::cout << "Expected: [1,0;0,1] or equivalent\n";
     std::cout << "Actual: ";
@@ -88,7 +88,7 @@ void echelonTest ( )
     std::cout << "[" << result [ 0 ][ 0 ] << "," << result [ 0 ][ 1 ] << ";"
               << result [ 1 ][ 0 ] << "," << result [ 1 ][ 1 ] << "]\n";
 
-    test [ 1 ] = std::vector< double > { 1, 2 };
+    test [ 1 ] = std::vector< Double > { 1, 2 };
 
     std::cout << "Expected: [1,2;0,0]\n";
     std::cout << "Actual: ";
@@ -96,10 +96,10 @@ void echelonTest ( )
     std::cout << "[" << result [ 0 ][ 0 ] << "," << result [ 0 ][ 1 ] << ";"
               << result [ 1 ][ 0 ] << "," << result [ 1 ][ 1 ] << "]\n";
 
-    test       = Matrix< double > { 3, 3 };
-    test [ 0 ] = std::vector< double > { 1, 2, 3 };
-    test [ 1 ] = std::vector< double > { 4, 5, 6 };
-    test [ 2 ] = std::vector< double > { 7, 8, 9 };
+    test       = Matrix< Double > { 3, 3 };
+    test [ 0 ] = std::vector< Double > { 1, 2, 3 };
+    test [ 1 ] = std::vector< Double > { 4, 5, 6 };
+    test [ 2 ] = std::vector< Double > { 7, 8, 9 };
 
     std::cout << "Expected: [1,0,-1;0,1,2;0,0,0]\n";
     std::cout << "Actual:   ";
@@ -112,10 +112,10 @@ void echelonTest ( )
     std::cout << result [ 2 ][ 0 ] << "," << result [ 2 ][ 1 ] << ","
               << result [ 2 ][ 2 ] << "]\n";
 
-    test       = Matrix< double > { 3, 4 };
-    test [ 0 ] = std::vector< double > { 1, 2, 3, 4 };
-    test [ 1 ] = std::vector< double > { 5, 6, 7, 8 };
-    test [ 2 ] = std::vector< double > { 9, 10, 11, 12 };
+    test       = Matrix< Double > { 3, 4 };
+    test [ 0 ] = std::vector< Double > { 1, 2, 3, 4 };
+    test [ 1 ] = std::vector< Double > { 5, 6, 7, 8 };
+    test [ 2 ] = std::vector< Double > { 9, 10, 11, 12 };
     result     = test.echelon ( );
     std::cout << "Expected: [1,0,-1,-2;0,1,2,3;0,0,0,0]\n";
     std::cout << "Actual:   [";
@@ -131,29 +131,29 @@ void testMatrixMultiplication ( )
 {
     using namespace ml;
 
-    Matrix< double >      lhs { 3, 3 };
-    Matrix< long double > rhs { 3, 3 };
+    Matrix< Double >      lhs { 3, 3 };
+    Matrix< Triple > rhs { 3, 3 };
 
-    Matrix< long double > out { 3, 3 };
+    Matrix< Triple > out { 3, 3 };
 
-    lhs [ 0 ] = std::vector< double > { 1, 2, 3 };
-    lhs [ 1 ] = std::vector< double > { 4, 5, 6 };
-    lhs [ 2 ] = std::vector< double > { 7, 8, 9 };
+    lhs [ 0 ] = std::vector< Double > { 1, 2, 3 };
+    lhs [ 1 ] = std::vector< Double > { 4, 5, 6 };
+    lhs [ 2 ] = std::vector< Double > { 7, 8, 9 };
 
-    rhs [ 0 ] = std::vector< long double > { 10, 11, 12 };
-    rhs [ 1 ] = std::vector< long double > { 13, 14, 15 };
-    rhs [ 2 ] = std::vector< long double > { 16, 17, 18 };
+    rhs [ 0 ] = std::vector< Triple > { 10, 11, 12 };
+    rhs [ 1 ] = std::vector< Triple > { 13, 14, 15 };
+    rhs [ 2 ] = std::vector< Triple > { 16, 17, 18 };
 
     out = lhs * rhs;
 
-    Matrix< long double > expect { 3, 3 };
-    expect [ 0 ] = std::vector< long double > { 1 * 10 + 2 * 13 + 3 * 16,
+    Matrix< Triple > expect { 3, 3 };
+    expect [ 0 ] = std::vector< Triple > { 1 * 10 + 2 * 13 + 3 * 16,
                                                 1 * 11 + 2 * 14 + 3 * 17,
                                                 1 * 12 + 2 * 15 + 3 * 18 };
-    expect [ 1 ] = std::vector< long double > { 4 * 10 + 5 * 13 + 6 * 16,
+    expect [ 1 ] = std::vector< Triple > { 4 * 10 + 5 * 13 + 6 * 16,
                                                 4 * 11 + 5 * 14 + 6 * 17,
                                                 4 * 12 + 5 * 15 + 6 * 18 };
-    expect [ 2 ] = std::vector< long double > { 7 * 10 + 8 * 13 + 9 * 16,
+    expect [ 2 ] = std::vector< Triple > { 7 * 10 + 8 * 13 + 9 * 16,
                                                 7 * 11 + 8 * 14 + 9 * 17,
                                                 7 * 12 + 8 * 15 + 9 * 18 };
 
@@ -177,16 +177,16 @@ void testVectorMultiplication ( )
 {
     using namespace ml;
 
-    Matrix< double > mat { 3, 3 };
-    mat [ 0 ] = std::vector< double > { 1, 2, 3 };
-    mat [ 1 ] = std::vector< double > { 4, 5, 6 };
-    mat [ 2 ] = std::vector< double > { 7, 8, 9 };
+    Matrix< Double > mat { 3, 3 };
+    mat [ 0 ] = std::vector< Double > { 1, 2, 3 };
+    mat [ 1 ] = std::vector< Double > { 4, 5, 6 };
+    mat [ 2 ] = std::vector< Double > { 7, 8, 9 };
 
-    std::vector< double > input { 1, 1, 1 };
+    std::vector< Double > input { 1, 1, 1 };
 
-    std::vector< double > expect = { 1 + 2 + 3, 4 + 5 + 6, 7 + 8 + 9 };
+    std::vector< Double > expect = { 1 + 2 + 3, 4 + 5 + 6, 7 + 8 + 9 };
 
-    std::vector< double > result = mat * input;
+    std::vector< Double > result = mat * input;
 
     std::cout << "Expected: ";
     for ( auto &e : expect ) { std::cout << e << " "; }

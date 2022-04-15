@@ -17,9 +17,9 @@
 
 #include <memory>
 
-template class ml::Matrix< float >;
-template class ml::Matrix< double >;
-template class ml::Matrix< long double >;
+template class ml::Matrix< Single >;
+template class ml::Matrix< Double >;
+template class ml::Matrix< Triple >;
 
 template < CONCEPT_NAMESPACE Floating V >
 ml::Matrix< V > *asMatrix ( void *matrix )
@@ -295,52 +295,47 @@ int compareMatrixAndMatrixAlgorithm ( void *lhs, void *rhs )
     return *asMatrix< V > ( lhs ) == *asMatrix< W > ( rhs );
 }
 
-// TODO: #1 Actually use these
-using Single = float;
-using Double = double;
-using Triple = long double;
-
 extern "C" {
 #define EXPORT_FN_ONE_ARG( RET, NAME, ARG1, TYPE1 )                            \
     EXTERN RET NAME##OfSingles ( TYPE1 ARG1 )                                  \
     {                                                                          \
-        return NAME##Algorithm< float > ( ARG1 );                              \
+        return NAME##Algorithm< Single > ( ARG1 );                             \
     }                                                                          \
     EXTERN RET NAME##OfDoubles ( TYPE1 ARG1 )                                  \
     {                                                                          \
-        return NAME##Algorithm< double > ( ARG1 );                             \
+        return NAME##Algorithm< Double > ( ARG1 );                             \
     }                                                                          \
     EXTERN RET NAME##OfTriples ( TYPE1 ARG1 )                                  \
     {                                                                          \
-        return NAME##Algorithm< long double > ( ARG1 );                        \
+        return NAME##Algorithm< Triple > ( ARG1 );                             \
     }
 
 #define EXPORT_FN_TWO_ARG( RET, NAME, ARG1, TYPE1, ARG2, TYPE2 )               \
     EXTERN RET NAME##OfSingles ( TYPE1 ARG1, TYPE2 ARG2 )                      \
     {                                                                          \
-        return NAME##Algorithm< float > ( ARG1, ARG2 );                        \
+        return NAME##Algorithm< Single > ( ARG1, ARG2 );                       \
     }                                                                          \
     EXTERN RET NAME##OfDoubles ( TYPE1 ARG1, TYPE2 ARG2 )                      \
     {                                                                          \
-        return NAME##Algorithm< double > ( ARG1, ARG2 );                       \
+        return NAME##Algorithm< Double > ( ARG1, ARG2 );                       \
     }                                                                          \
     EXTERN RET NAME##OfTriples ( TYPE1 ARG1, TYPE2 ARG2 )                      \
     {                                                                          \
-        return NAME##Algorithm< long double > ( ARG1, ARG2 );                  \
+        return NAME##Algorithm< Triple > ( ARG1, ARG2 );                       \
     }
 
 #define EXPORT_FN_3_ARGS( RET, NAME, ARG1, TYPE1, ARG2, TYPE2, ARG3, TYPE3 )   \
     EXTERN RET NAME##OfSingles ( TYPE1 ARG1, TYPE2 ARG2, TYPE3 ARG3 )          \
     {                                                                          \
-        return NAME##Algorithm< float > ( ARG1, ARG2, ARG3 );                  \
+        return NAME##Algorithm< Single > ( ARG1, ARG2, ARG3 );                 \
     }                                                                          \
     EXTERN RET NAME##OfDoubles ( TYPE1 ARG1, TYPE2 ARG2, TYPE3 ARG3 )          \
     {                                                                          \
-        return NAME##Algorithm< double > ( ARG1, ARG2, ARG3 );                 \
+        return NAME##Algorithm< Double > ( ARG1, ARG2, ARG3 );                 \
     }                                                                          \
     EXTERN RET NAME##OfTriples ( TYPE1 ARG1, TYPE2 ARG2, TYPE3 ARG3 )          \
     {                                                                          \
-        return NAME##Algorithm< long double > ( ARG1, ARG2, ARG3 );            \
+        return NAME##Algorithm< Triple > ( ARG1, ARG2, ARG3 );                 \
     }
 #define EXPORT_FN_4_ARGS( RET,                                                 \
                           NAME,                                                \
@@ -357,21 +352,21 @@ extern "C" {
                                  TYPE3 ARG3,                                   \
                                  TYPE4 ARG4 )                                  \
     {                                                                          \
-        return NAME##Algorithm< float > ( ARG1, ARG2, ARG3, ARG4 );            \
+        return NAME##Algorithm< Single > ( ARG1, ARG2, ARG3, ARG4 );           \
     }                                                                          \
     EXTERN RET NAME##OfDoubles ( TYPE1 ARG1,                                   \
                                  TYPE2 ARG2,                                   \
                                  TYPE3 ARG3,                                   \
                                  TYPE4 ARG4 )                                  \
     {                                                                          \
-        return NAME##Algorithm< double > ( ARG1, ARG2, ARG3, ARG4 );           \
+        return NAME##Algorithm< Double > ( ARG1, ARG2, ARG3, ARG4 );           \
     }                                                                          \
     EXTERN RET NAME##OfTriples ( TYPE1 ARG1,                                   \
                                  TYPE2 ARG2,                                   \
                                  TYPE3 ARG3,                                   \
                                  TYPE4 ARG4 )                                  \
     {                                                                          \
-        return NAME##Algorithm< long double > ( ARG1, ARG2, ARG3, ARG4 );      \
+        return NAME##Algorithm< Triple > ( ARG1, ARG2, ARG3, ARG4 );           \
     }
 #define EXPORT_FN_4_ARGS_FINAL_IS_ELEM( RET,                                   \
                                         NAME,                                  \
@@ -382,26 +377,26 @@ extern "C" {
                                         ARG3,                                  \
                                         TYPE3,                                 \
                                         ARG4 )                                 \
-    EXTERN RET NAME##OfSingles ( TYPE1 ARG1,                                   \
-                                 TYPE2 ARG2,                                   \
-                                 TYPE3 ARG3,                                   \
-                                 float ARG4 )                                  \
+    EXTERN RET NAME##OfSingles ( TYPE1  ARG1,                                  \
+                                 TYPE2  ARG2,                                  \
+                                 TYPE3  ARG3,                                  \
+                                 Single ARG4 )                                 \
     {                                                                          \
-        return NAME##Algorithm< float > ( ARG1, ARG2, ARG3, ARG4 );            \
+        return NAME##Algorithm< Single > ( ARG1, ARG2, ARG3, ARG4 );           \
     }                                                                          \
     EXTERN RET NAME##OfDoubles ( TYPE1  ARG1,                                  \
                                  TYPE2  ARG2,                                  \
                                  TYPE3  ARG3,                                  \
-                                 double ARG4 )                                 \
+                                 Double ARG4 )                                 \
     {                                                                          \
-        return NAME##Algorithm< double > ( ARG1, ARG2, ARG3, ARG4 );           \
+        return NAME##Algorithm< Double > ( ARG1, ARG2, ARG3, ARG4 );           \
     }                                                                          \
-    EXTERN RET NAME##OfTriples ( TYPE1       ARG1,                             \
-                                 TYPE2       ARG2,                             \
-                                 TYPE3       ARG3,                             \
-                                 long double ARG4 )                            \
+    EXTERN RET NAME##OfTriples ( TYPE1  ARG1,                                  \
+                                 TYPE2  ARG2,                                  \
+                                 TYPE3  ARG3,                                  \
+                                 Triple ARG4 )                                 \
     {                                                                          \
-        return NAME##Algorithm< long double > ( ARG1, ARG2, ARG3, ARG4 );      \
+        return NAME##Algorithm< Triple > ( ARG1, ARG2, ARG3, ARG4 );           \
     }
 #define EXPORT_FN_4_ARGS_FINAL_IS_ELEM_PTR( RET,                               \
                                             NAME,                              \
@@ -412,65 +407,65 @@ extern "C" {
                                             ARG3,                              \
                                             TYPE3,                             \
                                             ARG4 )                             \
-    EXTERN RET NAME##OfSingles ( TYPE1  ARG1,                                  \
-                                 TYPE2  ARG2,                                  \
-                                 TYPE3  ARG3,                                  \
-                                 float *ARG4 )                                 \
+    EXTERN RET NAME##OfSingles ( TYPE1   ARG1,                                 \
+                                 TYPE2   ARG2,                                 \
+                                 TYPE3   ARG3,                                 \
+                                 Single *ARG4 )                                \
     {                                                                          \
-        return NAME##Algorithm< float > ( ARG1, ARG2, ARG3, ARG4 );            \
+        return NAME##Algorithm< Single > ( ARG1, ARG2, ARG3, ARG4 );           \
     }                                                                          \
     EXTERN RET NAME##OfDoubles ( TYPE1   ARG1,                                 \
                                  TYPE2   ARG2,                                 \
                                  TYPE3   ARG3,                                 \
-                                 double *ARG4 )                                \
+                                 Double *ARG4 )                                \
     {                                                                          \
-        return NAME##Algorithm< double > ( ARG1, ARG2, ARG3, ARG4 );           \
+        return NAME##Algorithm< Double > ( ARG1, ARG2, ARG3, ARG4 );           \
     }                                                                          \
-    EXTERN RET NAME##OfTriples ( TYPE1        ARG1,                            \
-                                 TYPE2        ARG2,                            \
-                                 TYPE3        ARG3,                            \
-                                 long double *ARG4 )                           \
+    EXTERN RET NAME##OfTriples ( TYPE1   ARG1,                                 \
+                                 TYPE2   ARG2,                                 \
+                                 TYPE3   ARG3,                                 \
+                                 Triple *ARG4 )                                \
     {                                                                          \
-        return NAME##Algorithm< long double > ( ARG1, ARG2, ARG3, ARG4 );      \
+        return NAME##Algorithm< Triple > ( ARG1, ARG2, ARG3, ARG4 );           \
     }
 #define EXPORT_FN_MATRIX_MATRIX_BIN_OP( RET, NAME )                            \
     EXTERN RET NAME##SinglesAndSingles ( MatrixOfSingles dst,                  \
                                          MatrixOfSingles lhs,                  \
                                          MatrixOfSingles rhs )                 \
     {                                                                          \
-        return NAME##MatrixAndMatrixAlgorithm< float, float > ( dst,           \
-                                                                lhs,           \
-                                                                rhs );         \
+        return NAME##MatrixAndMatrixAlgorithm< Single, Single > ( dst,         \
+                                                                  lhs,         \
+                                                                  rhs );       \
     }                                                                          \
     EXTERN RET NAME##SinglesAndDoubles ( MatrixOfDoubles dst,                  \
                                          MatrixOfSingles lhs,                  \
                                          MatrixOfDoubles rhs )                 \
     {                                                                          \
-        return NAME##MatrixAndMatrixAlgorithm< float, double > ( dst,          \
-                                                                 lhs,          \
-                                                                 rhs );        \
+        return NAME##MatrixAndMatrixAlgorithm< Single, Double > ( dst,         \
+                                                                  lhs,         \
+                                                                  rhs );       \
     }                                                                          \
     EXTERN RET NAME##SinglesAndTriples ( MatrixOfTriples dst,                  \
                                          MatrixOfSingles lhs,                  \
                                          MatrixOfTriples rhs )                 \
     {                                                                          \
-        return NAME##MatrixAndMatrixAlgorithm< float, long double > ( dst,     \
-                                                                      lhs,     \
-                                                                      rhs );   \
+        return NAME##MatrixAndMatrixAlgorithm< Single, Triple > ( dst,         \
+                                                                  lhs,         \
+                                                                  rhs );       \
     }                                                                          \
     EXTERN RET NAME##DoublesAndSingles ( MatrixOfDoubles dst,                  \
                                          MatrixOfDoubles lhs,                  \
                                          MatrixOfSingles rhs )                 \
     {                                                                          \
-        return NAME##MatrixAndMatrixAlgorithm< double, float > ( dst,          \
-                                                                 lhs,          \
-                                                                 rhs );        \
+        return NAME##MatrixAndMatrixAlgorithm< Double, Single > ( dst,         \
+                                                                  lhs,         \
+                                                                  rhs );       \
     }                                                                          \
     EXTERN RET NAME##DoublesAndDoubles ( MatrixOfDoubles dst,                  \
                                          MatrixOfDoubles lhs,                  \
                                          MatrixOfDoubles rhs )                 \
     {                                                                          \
-        return NAME##MatrixAndMatrixAlgorithm< double, double > ( dst,         \
+        return NAME##MatrixAndMatrixAlgorithm< Double, Double > ( dst,         \
                                                                   lhs,         \
                                                                   rhs );       \
     }                                                                          \
@@ -478,251 +473,244 @@ extern "C" {
                                          MatrixOfDoubles lhs,                  \
                                          MatrixOfTriples rhs )                 \
     {                                                                          \
-        return NAME##MatrixAndMatrixAlgorithm< double, long double > ( dst,    \
-                                                                       lhs,    \
-                                                                       rhs );  \
+        return NAME##MatrixAndMatrixAlgorithm< Double, Triple > ( dst,         \
+                                                                  lhs,         \
+                                                                  rhs );       \
     }                                                                          \
     EXTERN RET NAME##TriplesAndSingles ( MatrixOfTriples dst,                  \
                                          MatrixOfTriples lhs,                  \
                                          MatrixOfSingles rhs )                 \
     {                                                                          \
-        return NAME##MatrixAndMatrixAlgorithm< long double, float > ( dst,     \
-                                                                      lhs,     \
-                                                                      rhs );   \
+        return NAME##MatrixAndMatrixAlgorithm< Triple, Single > ( dst,         \
+                                                                  lhs,         \
+                                                                  rhs );       \
     }                                                                          \
     EXTERN RET NAME##TriplesAndDoubles ( MatrixOfTriples dst,                  \
                                          MatrixOfTriples lhs,                  \
                                          MatrixOfDoubles rhs )                 \
     {                                                                          \
-        return NAME##MatrixAndMatrixAlgorithm< long double, double > ( dst,    \
-                                                                       lhs,    \
-                                                                       rhs );  \
+        return NAME##MatrixAndMatrixAlgorithm< Triple, Double > ( dst,         \
+                                                                  lhs,         \
+                                                                  rhs );       \
     }                                                                          \
     EXTERN RET NAME##TriplesAndTriples ( MatrixOfTriples dst,                  \
                                          MatrixOfTriples lhs,                  \
                                          MatrixOfTriples rhs )                 \
     {                                                                          \
-        return NAME##MatrixAndMatrixAlgorithm< long double, long double > (    \
-                dst,                                                           \
-                lhs,                                                           \
-                rhs );                                                         \
+        return NAME##MatrixAndMatrixAlgorithm< Triple, Triple > ( dst,         \
+                                                                  lhs,         \
+                                                                  rhs );       \
     }
 #define EXPORT_FN_MATRIX_VECTOR_BIN_OP( RET, NAME )                            \
-    EXTERN RET NAME##SinglesWithSingle ( float          *res,                  \
+    EXTERN RET NAME##SinglesWithSingle ( Single         *res,                  \
                                          MatrixOfSingles src,                  \
                                          size_y          len,                  \
-                                         float          *vec )                 \
+                                         Single         *vec )                 \
     {                                                                          \
-        return NAME##MatrixAndVectorAlgorithm< float, float > ( res,           \
-                                                                src,           \
-                                                                len,           \
-                                                                vec );         \
-    }                                                                          \
-    EXTERN RET NAME##SinglesWithDouble ( double         *res,                  \
-                                         MatrixOfSingles src,                  \
-                                         size_y          len,                  \
-                                         double         *vec )                 \
-    {                                                                          \
-        return NAME##MatrixAndVectorAlgorithm< float, double > ( res,          \
-                                                                 src,          \
-                                                                 len,          \
-                                                                 vec );        \
-    }                                                                          \
-    EXTERN RET NAME##SinglesWithTriple ( long double    *res,                  \
-                                         MatrixOfSingles src,                  \
-                                         size_y          len,                  \
-                                         long double    *vec )                 \
-    {                                                                          \
-        return NAME##MatrixAndVectorAlgorithm< float, long double > ( res,     \
-                                                                      src,     \
-                                                                      len,     \
-                                                                      vec );   \
-    }                                                                          \
-    EXTERN RET NAME##DoublesWithSingle ( double         *res,                  \
-                                         MatrixOfDoubles src,                  \
-                                         size_y          len,                  \
-                                         float          *vec )                 \
-    {                                                                          \
-        return NAME##MatrixAndVectorAlgorithm< double, float > ( res,          \
-                                                                 src,          \
-                                                                 len,          \
-                                                                 vec );        \
-    }                                                                          \
-    EXTERN RET NAME##DoublesWithDouble ( double         *res,                  \
-                                         MatrixOfDoubles src,                  \
-                                         size_y          len,                  \
-                                         double         *vec )                 \
-    {                                                                          \
-        return NAME##MatrixAndVectorAlgorithm< double, double > ( res,         \
+        return NAME##MatrixAndVectorAlgorithm< Single, Single > ( res,         \
                                                                   src,         \
                                                                   len,         \
                                                                   vec );       \
     }                                                                          \
-    EXTERN RET NAME##DoublesWithTriple ( long double    *res,                  \
+    EXTERN RET NAME##SinglesWithDouble ( Double         *res,                  \
+                                         MatrixOfSingles src,                  \
+                                         size_y          len,                  \
+                                         Double         *vec )                 \
+    {                                                                          \
+        return NAME##MatrixAndVectorAlgorithm< Single, Double > ( res,         \
+                                                                  src,         \
+                                                                  len,         \
+                                                                  vec );       \
+    }                                                                          \
+    EXTERN RET NAME##SinglesWithTriple ( Triple         *res,                  \
+                                         MatrixOfSingles src,                  \
+                                         size_y          len,                  \
+                                         Triple         *vec )                 \
+    {                                                                          \
+        return NAME##MatrixAndVectorAlgorithm< Single, Triple > ( res,         \
+                                                                  src,         \
+                                                                  len,         \
+                                                                  vec );       \
+    }                                                                          \
+    EXTERN RET NAME##DoublesWithSingle ( Double         *res,                  \
                                          MatrixOfDoubles src,                  \
                                          size_y          len,                  \
-                                         long double    *vec )                 \
+                                         Single         *vec )                 \
     {                                                                          \
-        return NAME##MatrixAndVectorAlgorithm< double, long double > ( res,    \
-                                                                       src,    \
-                                                                       len,    \
-                                                                       vec );  \
+        return NAME##MatrixAndVectorAlgorithm< Double, Single > ( res,         \
+                                                                  src,         \
+                                                                  len,         \
+                                                                  vec );       \
     }                                                                          \
-    EXTERN RET NAME##TriplesWithSingle ( long double    *res,                  \
+    EXTERN RET NAME##DoublesWithDouble ( Double         *res,                  \
+                                         MatrixOfDoubles src,                  \
+                                         size_y          len,                  \
+                                         Double         *vec )                 \
+    {                                                                          \
+        return NAME##MatrixAndVectorAlgorithm< Double, Double > ( res,         \
+                                                                  src,         \
+                                                                  len,         \
+                                                                  vec );       \
+    }                                                                          \
+    EXTERN RET NAME##DoublesWithTriple ( Triple         *res,                  \
+                                         MatrixOfDoubles src,                  \
+                                         size_y          len,                  \
+                                         Triple         *vec )                 \
+    {                                                                          \
+        return NAME##MatrixAndVectorAlgorithm< Double, Triple > ( res,         \
+                                                                  src,         \
+                                                                  len,         \
+                                                                  vec );       \
+    }                                                                          \
+    EXTERN RET NAME##TriplesWithSingle ( Triple         *res,                  \
                                          MatrixOfTriples src,                  \
                                          size_y          len,                  \
-                                         float          *vec )                 \
+                                         Single         *vec )                 \
     {                                                                          \
-        return NAME##MatrixAndVectorAlgorithm< long double, float > ( res,     \
-                                                                      src,     \
-                                                                      len,     \
-                                                                      vec );   \
+        return NAME##MatrixAndVectorAlgorithm< Triple, Single > ( res,         \
+                                                                  src,         \
+                                                                  len,         \
+                                                                  vec );       \
     }                                                                          \
-    EXTERN RET NAME##TriplesWithDouble ( long double    *res,                  \
+    EXTERN RET NAME##TriplesWithDouble ( Triple         *res,                  \
                                          MatrixOfTriples src,                  \
                                          size_y          len,                  \
-                                         double         *vec )                 \
+                                         Double         *vec )                 \
     {                                                                          \
-        return NAME##MatrixAndVectorAlgorithm< long double, double > ( res,    \
-                                                                       src,    \
-                                                                       len,    \
-                                                                       vec );  \
+        return NAME##MatrixAndVectorAlgorithm< Triple, Double > ( res,         \
+                                                                  src,         \
+                                                                  len,         \
+                                                                  vec );       \
     }                                                                          \
-    EXTERN RET NAME##TriplesWithTriple ( long double    *res,                  \
+    EXTERN RET NAME##TriplesWithTriple ( Triple         *res,                  \
                                          MatrixOfTriples src,                  \
                                          size_y          len,                  \
-                                         long double    *vec )                 \
+                                         Triple         *vec )                 \
     {                                                                          \
-        return NAME##MatrixAndVectorAlgorithm< long double, long double > (    \
-                res,                                                           \
-                src,                                                           \
-                len,                                                           \
-                vec );                                                         \
+        return NAME##MatrixAndVectorAlgorithm< Triple, Triple > ( res,         \
+                                                                  src,         \
+                                                                  len,         \
+                                                                  vec );       \
     }
 #define EXPORT_FN_MATRIX_SCALAR_BIN_OP( RET, NAME )                            \
     EXTERN RET NAME##SinglesAndSingle ( MatrixOfSingles dst,                   \
                                         MatrixOfSingles src,                   \
-                                        float           x )                    \
+                                        Single          x )                    \
     {                                                                          \
-        return NAME##MatrixAndScalarAlgorithm< float, float > ( dst, src, x ); \
+        return NAME##MatrixAndScalarAlgorithm< Single, Single > ( dst,         \
+                                                                  src,         \
+                                                                  x );         \
     }                                                                          \
     EXTERN RET NAME##SinglesAndDouble ( MatrixOfDoubles dst,                   \
                                         MatrixOfSingles src,                   \
-                                        double          x )                    \
+                                        Double          x )                    \
     {                                                                          \
-        return NAME##MatrixAndScalarAlgorithm< float, double > ( dst,          \
-                                                                 src,          \
-                                                                 x );          \
+        return NAME##MatrixAndScalarAlgorithm< Single, Double > ( dst,         \
+                                                                  src,         \
+                                                                  x );         \
     }                                                                          \
     EXTERN RET NAME##SinglesAndTriple ( MatrixOfTriples dst,                   \
                                         MatrixOfSingles src,                   \
-                                        long double     x )                    \
+                                        Triple          x )                    \
     {                                                                          \
-        return NAME##MatrixAndScalarAlgorithm< float, long double > ( dst,     \
-                                                                      src,     \
-                                                                      x );     \
+        return NAME##MatrixAndScalarAlgorithm< Single, Triple > ( dst,         \
+                                                                  src,         \
+                                                                  x );         \
     }                                                                          \
     EXTERN RET NAME##DoublesAndSingle ( MatrixOfDoubles dst,                   \
                                         MatrixOfDoubles src,                   \
-                                        float           x )                    \
+                                        Single          x )                    \
     {                                                                          \
-        return NAME##MatrixAndScalarAlgorithm< double, float > ( dst,          \
-                                                                 src,          \
-                                                                 x );          \
+        return NAME##MatrixAndScalarAlgorithm< Double, Single > ( dst,         \
+                                                                  src,         \
+                                                                  x );         \
     }                                                                          \
     EXTERN RET NAME##DoublesAndDouble ( MatrixOfDoubles dst,                   \
                                         MatrixOfDoubles src,                   \
-                                        double          x )                    \
+                                        Double          x )                    \
     {                                                                          \
-        return NAME##MatrixAndScalarAlgorithm< double, double > ( dst,         \
+        return NAME##MatrixAndScalarAlgorithm< Double, Double > ( dst,         \
                                                                   src,         \
                                                                   x );         \
     }                                                                          \
     EXTERN RET NAME##DoublesAndTriple ( MatrixOfTriples dst,                   \
                                         MatrixOfDoubles src,                   \
-                                        long double     x )                    \
+                                        Triple          x )                    \
     {                                                                          \
-        return NAME##MatrixAndScalarAlgorithm< double, long double > ( dst,    \
-                                                                       src,    \
-                                                                       x );    \
+        return NAME##MatrixAndScalarAlgorithm< Double, Triple > ( dst,         \
+                                                                  src,         \
+                                                                  x );         \
     }                                                                          \
     EXTERN RET NAME##TriplesAndSingle ( MatrixOfTriples dst,                   \
                                         MatrixOfTriples src,                   \
-                                        float           x )                    \
+                                        Single          x )                    \
     {                                                                          \
-        return NAME##MatrixAndScalarAlgorithm< long double, float > ( dst,     \
-                                                                      src,     \
-                                                                      x );     \
+        return NAME##MatrixAndScalarAlgorithm< Triple, Single > ( dst,         \
+                                                                  src,         \
+                                                                  x );         \
     }                                                                          \
     EXTERN RET NAME##TriplesAndDouble ( MatrixOfTriples dst,                   \
                                         MatrixOfTriples src,                   \
-                                        double          x )                    \
+                                        Double          x )                    \
     {                                                                          \
-        return NAME##MatrixAndScalarAlgorithm< long double, double > ( dst,    \
-                                                                       src,    \
-                                                                       x );    \
+        return NAME##MatrixAndScalarAlgorithm< Triple, Double > ( dst,         \
+                                                                  src,         \
+                                                                  x );         \
     }                                                                          \
     EXTERN RET NAME##TriplesAndTriple ( MatrixOfTriples dst,                   \
                                         MatrixOfTriples src,                   \
-                                        long double     x )                    \
+                                        Triple          x )                    \
     {                                                                          \
-        return NAME##MatrixAndScalarAlgorithm< long double, long double > (    \
-                dst,                                                           \
-                src,                                                           \
-                x );                                                           \
+        return NAME##MatrixAndScalarAlgorithm< Triple, Triple > ( dst,         \
+                                                                  src,         \
+                                                                  x );         \
     }
 
 #define EXPORT_FN_MATRIX_COMPARE( RET, NAME )                                  \
     EXTERN RET NAME##SinglesAndSingles ( MatrixOfSingles lhs,                  \
                                          MatrixOfSingles rhs )                 \
     {                                                                          \
-        return NAME##MatrixAndMatrixAlgorithm< float, float > ( lhs, rhs );    \
+        return NAME##MatrixAndMatrixAlgorithm< Single, Single > ( lhs, rhs );  \
     }                                                                          \
     EXTERN RET NAME##SinglesAndDoubles ( MatrixOfSingles lhs,                  \
                                          MatrixOfDoubles rhs )                 \
     {                                                                          \
-        return NAME##MatrixAndMatrixAlgorithm< float, double > ( lhs, rhs );   \
+        return NAME##MatrixAndMatrixAlgorithm< Single, Double > ( lhs, rhs );  \
     }                                                                          \
     EXTERN RET NAME##SinglesAndTriples ( MatrixOfSingles lhs,                  \
                                          MatrixOfTriples rhs )                 \
     {                                                                          \
-        return NAME##MatrixAndMatrixAlgorithm< float, long double > ( lhs,     \
-                                                                      rhs );   \
+        return NAME##MatrixAndMatrixAlgorithm< Single, Triple > ( lhs, rhs );  \
     }                                                                          \
     EXTERN RET NAME##DoublesAndSingles ( MatrixOfDoubles lhs,                  \
                                          MatrixOfSingles rhs )                 \
     {                                                                          \
-        return NAME##MatrixAndMatrixAlgorithm< double, float > ( lhs, rhs );   \
+        return NAME##MatrixAndMatrixAlgorithm< Double, Single > ( lhs, rhs );  \
     }                                                                          \
     EXTERN RET NAME##DoublesAndDoubles ( MatrixOfDoubles lhs,                  \
                                          MatrixOfDoubles rhs )                 \
     {                                                                          \
-        return NAME##MatrixAndMatrixAlgorithm< double, double > ( lhs, rhs );  \
+        return NAME##MatrixAndMatrixAlgorithm< Double, Double > ( lhs, rhs );  \
     }                                                                          \
     EXTERN RET NAME##DoublesAndTriples ( MatrixOfTriples lhs,                  \
                                          MatrixOfTriples rhs )                 \
     {                                                                          \
-        return NAME##MatrixAndMatrixAlgorithm< double, long double > ( lhs,    \
-                                                                       rhs );  \
+        return NAME##MatrixAndMatrixAlgorithm< Double, Triple > ( lhs, rhs );  \
     }                                                                          \
     EXTERN RET NAME##TriplesAndSingles ( MatrixOfTriples lhs,                  \
                                          MatrixOfSingles rhs )                 \
     {                                                                          \
-        return NAME##MatrixAndMatrixAlgorithm< long double, float > ( lhs,     \
-                                                                      rhs );   \
+        return NAME##MatrixAndMatrixAlgorithm< Triple, Single > ( lhs, rhs );  \
     }                                                                          \
     EXTERN RET NAME##TriplesAndDoubles ( MatrixOfTriples lhs,                  \
                                          MatrixOfDoubles rhs )                 \
     {                                                                          \
-        return NAME##MatrixAndMatrixAlgorithm< long double, double > ( lhs,    \
-                                                                       rhs );  \
+        return NAME##MatrixAndMatrixAlgorithm< Triple, Double > ( lhs, rhs );  \
     }                                                                          \
     EXTERN RET NAME##TriplesAndTriples ( MatrixOfTriples lhs,                  \
                                          MatrixOfTriples rhs )                 \
     {                                                                          \
-        return NAME##MatrixAndMatrixAlgorithm< long double, long double > (    \
-                lhs,                                                           \
-                rhs );                                                         \
+        return NAME##MatrixAndMatrixAlgorithm< Triple, Triple > ( lhs, rhs );  \
     }
 
     EXPORT_FN_ONE_ARG ( void, sizeofMatrix, size, size_y * )

@@ -30,4 +30,14 @@
 #define NOEXCEPT throw()
 #else
 #define NOEXCEPT noexcept
+
+// single precision
+typedef float Single;
+// double precision
+typedef double Double;
+// highest precision. "Triple" has the same number of characters as "Double" and
+// "Single" Generally, "Triple" is not going to be "Triple" precision. On x86
+// Triple is either 80-bits or 128-bits (x87 Real or Quadruple precision).
+typedef long double Triple;
+
 #endif

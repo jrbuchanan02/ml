@@ -11,6 +11,9 @@
  * undefined.
  * @note Always pair getting the destination of a matrix or constructing a
  * matrix with deleting the matrix.
+ * @note I decided not to alias types in this file other than the aliases 
+ * present in this file because I don't want to make every dependent of ML 
+ * include the meta.hh file since that source may define its own aliases.
  * @version 1
  * @date 2022-04-15
  *
